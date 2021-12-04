@@ -16,8 +16,6 @@
 >Sa structurez codul mai bine conform PEP Documentation.
 
 
-# PythonProject4inaROW
-PythonProject4inaROW
 
 # Python Project  - 4 in a ROW
 
