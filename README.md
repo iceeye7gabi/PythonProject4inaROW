@@ -1,5 +1,12 @@
 # Versions
 
+
+## Version 3 14.12.2021 - NEED TO DO
+>Am in plan ca pana pe 14.12.2021 sa termin implementarea AI-ului in joc(pe cele 3 nivele).
+
+>Sa mai restructurez codul.(cat mai bine posibil)
+
+
 ## Version 2 06.12.2021 - FINISHED (6:24 PM) ---> 7:05PM
 >Am implementat functionalitatea jocului pentru 2 jucatori normali.
 
