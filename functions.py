@@ -100,7 +100,7 @@ def winning_conditions(board, piece):
 
     # check left diag
     for iterator_column in range(COLUMN_COUNT - 3):
-        for iterator_row in range(ROW_COUNT - 3):
+        for iterator_row in range(3, ROW_COUNT):
             if board[iterator_row][iterator_column] == piece and board[iterator_row - 1][
                 iterator_column + 1] == piece and board[iterator_row - 2][iterator_column + 2] == piece and \
                     board[iterator_row - 3][iterator_column + 3] == piece:
