@@ -2,19 +2,20 @@ import numpy as np
 import pygame
 import sys
 import math
-
-ROW_COUNT = 6
-COLUMN_COUNT = 7
+from init import COLUMN_COUNT, ROW_COUNT
 
 COLORBLUE = (0, 0, 255)
 COLORBLACK = (0, 0, 0)
 COLORRED = (255, 0, 0)
 COLORYELLOW = (255, 255, 0)
 
+PLAYER1 = 1
+PLAYER2 = 2
+
 
 # initialize the matrix for the game
 def create_board():
-    board = np.zeros((6, 7))
+    board = np.zeros((ROW_COUNT, COLUMN_COUNT))
     return board
 
 
@@ -25,7 +26,7 @@ def put_piece(board, row, column, piece):
 
 # verify if you can place the piece in the spot
 def is_valid_location(board, column):
-    return board[5][column] == 0
+    return board[ROW_COUNT-1][column] == 0
 
 
 # return the first empty(available) row
@@ -70,3 +71,37 @@ def draw_board(board):
                                                          height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)),
                                    RADIUS)
     pygame.display.update()
+
+
+def winning_conditions(board, piece):
+    # check horizontally
+    for iterator_column in range(COLUMN_COUNT - 3):
+        for iterator_row in range(ROW_COUNT):
+            if board[iterator_row][iterator_column] == piece and board[iterator_row][
+                iterator_column + 1] == piece and board[iterator_row][iterator_column + 2] == piece and \
+                    board[iterator_row][iterator_column + 3] == piece:
+                return True
+
+    # check vertically
+    for iterator_column in range(COLUMN_COUNT):
+        for iterator_row in range(ROW_COUNT - 3):
+            if board[iterator_row][iterator_column] == piece and board[iterator_row + 1][
+                iterator_column] == piece and board[iterator_row + 2][iterator_column] == piece and \
+                    board[iterator_row + 3][iterator_column] == piece:
+                return True
+
+    # check right diag
+    for iterator_column in range(COLUMN_COUNT - 3):
+        for iterator_row in range(ROW_COUNT - 3):
+            if board[iterator_row][iterator_column] == piece and board[iterator_row + 1][
+                iterator_column + 1] == piece and board[iterator_row + 2][iterator_column + 2] == piece and \
+                    board[iterator_row + 3][iterator_column + 3] == piece:
+                return True
+
+    # check left diag
+    for iterator_column in range(COLUMN_COUNT - 3):
+        for iterator_row in range(ROW_COUNT - 3):
+            if board[iterator_row][iterator_column] == piece and board[iterator_row - 1][
+                iterator_column + 1] == piece and board[iterator_row - 2][iterator_column + 2] == piece and \
+                    board[iterator_row - 3][iterator_column + 3] == piece:
+                return True
