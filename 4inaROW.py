@@ -1,3 +1,6 @@
+import random
+import sys
+
 from functions import *
 from init import enemy, turn
 
@@ -66,3 +69,61 @@ if enemy == PLAYER2:
                     print_board(board)
                     draw_board(board)
                     turn = PLAYER1
+
+# case when the enemy is a AI
+if enemy == AI:
+
+    # drawing the board
+    draw_board(board)
+    pygame.display.update()
+
+    while not game_over:
+        for event in pygame.event.get():
+            # handle the event when you close the game through the exit button
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            # handle the event when the player can see his turn above the board
+            if event.type == pygame.MOUSEMOTION:
+                pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
+                pos_x = event.pos[0]
+                if turn == PLAYER1 or turn == PLAYER2:
+                    pygame.draw.circle(screen, COLORRED, (pos_x, int(SQUARESIZE / 2)), RADIUS)
+                elif turn == AI:
+                    continue
+            pygame.display.update()
+
+            #  Player1/2 - regular player
+            if turn == PLAYER1 or turn == PLAYER2:
+                #  Player1/2 - regular player
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos_x = event.pos[0]
+                    column = int(math.floor(pos_x / SQUARESIZE))
+
+                    if is_valid_location(board, column):
+                        my_row = get_empty_row(board, column)
+                        put_piece(board, my_row, column, 1)
+
+                        if winning_conditions(board, 1):
+                            print("Player1 won the game.")
+                            game_over = True
+                            break
+                        print_board(board)
+                        draw_board(board)
+                        turn = AI
+
+            #  Player2 - AI
+            elif turn == AI:
+                column = random.randint(0, COLUMN_COUNT - 1)
+
+                if is_valid_location(board, column):
+                    my_row = get_empty_row(board, column)
+                    put_piece(board, my_row, column, 3)
+
+                    if winning_conditions(board, 3):
+                        print("AI won the game.")
+                        game_over = True
+                        break
+                print_board(board)
+                draw_board(board)
+                turn = PLAYER1

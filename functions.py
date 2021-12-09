@@ -1,6 +1,5 @@
 import numpy as np
 import pygame
-import sys
 import math
 from init import COLUMN_COUNT, ROW_COUNT
 
@@ -8,9 +7,11 @@ COLORBLUE = (0, 0, 255)
 COLORBLACK = (0, 0, 0)
 COLORRED = (255, 0, 0)
 COLORYELLOW = (255, 255, 0)
+COLORPINK = (255, 192, 203)
 
 PLAYER1 = 1
 PLAYER2 = 2
+AI = 3
 
 
 # initialize the matrix for the game
@@ -68,6 +69,10 @@ def draw_board(board):
                                                       height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)), RADIUS)
             elif board[iterator_row][iterator_column] == 2:
                 pygame.draw.circle(screen, COLORYELLOW, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
+                                                         height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)),
+                                   RADIUS)
+            elif board[iterator_row][iterator_column] == 3:
+                pygame.draw.circle(screen, COLORPINK, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
                                                          height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)),
                                    RADIUS)
     pygame.display.update()

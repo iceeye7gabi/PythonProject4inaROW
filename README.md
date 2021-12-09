@@ -1,11 +1,25 @@
 # Versions
 
+## Version 3 14.12.2021 - Need to be Done
+>Trebuie sa implementez pana pe 14.12.2021 si nivelurile de AI medium si hard.
 
-## Version 3 14.12.2021 - NEED TO DO
->Am in plan ca pana pe 14.12.2021 sa termin implementarea AI-ului in joc(pe cele 3 nivele).
+>M-am gandit ca pentru connected-4 ar fi foarte util sa folosesc algoritmul MiniMax.
 
->Sa mai restructurez codul.(cat mai bine posibil)
+>Sa restructurez codul cat mai mult.
+## Version 3 09.12.2021 - Finished(12:35 PM)
+>Am implementat primul nivel de AI(se face o alegere random a coloanei pe care se pune piesa)
 
+>Am implementat pentru input-ul de la tastatura ca un jucator sa poata joace cu un AI.
+
+
+### Version 3.1 09.12.2021 - Resolved Bug Problem (12:15 PM)
+> Am rezolvat un bug legat punerea pieselor pe tabla de joc de catre AI. Problema era ca valoarea din spatele a pieselor trebuie sa fie diferite la AI fata de la jucatorii simplii, acum se detecteaza diferenta si se pune piesa AI-ul pe tabla de joc.
+
+> Am modificat liniile 121 si 123 din 4inaROW.py . (schimbat valoarea din instructiunile if si put_piece() )
+
+>Am pregatit si un gif in care prezint parcursul pana acum:
+
+ ![gif](https://media.giphy.com/media/VPt5zEpLcikH3SgCiU/giphy.gif)
 
 ## Version 2 06.12.2021 - FINISHED (6:24 PM) ---> 7:05PM
 >Am implementat functionalitatea jocului pentru 2 jucatori normali.

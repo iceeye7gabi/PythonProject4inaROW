@@ -2,6 +2,7 @@ import sys
 
 PLAYER1 = 1
 PLAYER2 = 2
+AI = 3
 
 # verify the correctness of the input given from keyboard
 if len(sys.argv) < 4:
@@ -11,8 +12,10 @@ if len(sys.argv) < 4:
 # verify the correctness of the first parameter
 if sys.argv[1] == "player":
     enemy = PLAYER2
+elif sys.argv[1] == "AI":
+    enemy = AI
 else:
-    print("Ati introdus gresit primul argument! Trebuie player!")
+    print("Ati introdus gresit primul argument! Trebuie player sau AI!")
     exit()
 
 # verify the correctness of the second and third parameter
@@ -28,5 +31,7 @@ if sys.argv[4] == "player1":
     turn = PLAYER1
 elif sys.argv[4] == "player2":
     turn = PLAYER2
+elif sys.argv[4] == "AI":
+    turn = AI
 else:
-    print("Ati introdus gresit al 4 lea argument! Trebuie player1/player2")
+    print("Ati introdus gresit al 4 lea argument! Trebuie player1/player2/AI")
