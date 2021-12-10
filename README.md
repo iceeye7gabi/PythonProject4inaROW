@@ -1,11 +1,28 @@
 # Versions
 
-## Version 3 14.12.2021 - Need to be Done
->Trebuie sa implementez pana pe 14.12.2021 si nivelurile de AI medium si hard.
+## Version 4.1 10.12.2021 - Finished(9:31 PM)
+>Am implementat un sistem de scoring pentru alegerea AI-ului(orizontal, vertical si pe ambele diagonale: stg+drpt)
 
->M-am gandit ca pentru connected-4 ar fi foarte util sa folosesc algoritmul MiniMax.
+>In principiu, sistemul cauta iterativ pe toate coloane disponibile toate randurile libere disponibile si calculeaza un scor pentru fiecare alegere.
 
->Sa restructurez codul cat mai mult.
+>Daca se gaseste o secventa de 3inaRow, scorul este adunat cu o valoare mica(5). Insa daca gasim o secventa castigatoarem, 4inaRow, scorul creste cu 50. 
+
+>Astfel, daca am compara cele 2 alegeri, AI-ul o alege pe a2a, ca are un scor mai bun.
+
+>In caz ca nu se gaseste nici 3 si nici 4 in a Row, se face alegerea random.
+
+### Version 4.1.1 10.12.2021 - Resolved Bug Problem (9:20 PM)
+>In principiu, bug-urile care mi-au dat cele mai mari batai de cap au fost cele pentru determinarea scorului sistemului pe diagonale. 
+
+>De exemplu, initial pentru diagonala secundara, cand determinam index-ul ma foloseam de dimensiunea maxima a tablei, dar era gresit pentru ca in problema dimensiunea tablei de joc este variabila.
+ 
+>Asa ca am ales sa reprezint in functie de index-ul curent.(linia 161 din functions, metoda score_possible_position)
+
+>Am pregatit si 2 gif-urile cum functioneaza acum AI:
+
+![gif](https://media.giphy.com/media/qaQiej0GJkBwwRHKmy/giphy.gif)
+
+![gif](https://media.giphy.com/media/bCLZ45HVcX5ACfPxm8/giphy.gif)
 ## Version 3 09.12.2021 - Finished(12:35 PM)
 >Am implementat primul nivel de AI(se face o alegere random a coloanei pe care se pune piesa)
 

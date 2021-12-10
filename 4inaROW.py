@@ -43,7 +43,7 @@ if enemy == PLAYER2:
 
                     if is_valid_location(board, column):
                         my_row = get_empty_row(board, column)
-                        put_piece(board, my_row, column, 1)
+                        put_piece(board, my_row, column, PLAYER1_PIECE)
 
                         if winning_conditions(board, 1):
                             print("Player1 won the game.")
@@ -60,7 +60,7 @@ if enemy == PLAYER2:
 
                     if is_valid_location(board, column):
                         my_row = get_empty_row(board, column)
-                        put_piece(board, my_row, column, 2)
+                        put_piece(board, my_row, column, PLAYER2_PIECE)
 
                         if winning_conditions(board, 2):
                             print("Player2 won the game.")
@@ -102,7 +102,7 @@ if enemy == AI:
 
                     if is_valid_location(board, column):
                         my_row = get_empty_row(board, column)
-                        put_piece(board, my_row, column, 1)
+                        put_piece(board, my_row, column, PLAYER1_PIECE)
 
                         if winning_conditions(board, 1):
                             print("Player1 won the game.")
@@ -114,11 +114,12 @@ if enemy == AI:
 
             #  Player2 - AI
             elif turn == AI:
-                column = random.randint(0, COLUMN_COUNT - 1)
+                #column = random.randint(0, COLUMN_COUNT - 1)
+                column = put_best_move_possible(board, AI_PIECE)
 
                 if is_valid_location(board, column):
                     my_row = get_empty_row(board, column)
-                    put_piece(board, my_row, column, 3)
+                    put_piece(board, my_row, column, AI_PIECE)
 
                     if winning_conditions(board, 3):
                         print("AI won the game.")
