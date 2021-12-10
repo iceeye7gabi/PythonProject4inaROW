@@ -1,5 +1,22 @@
 # Versions
 
+## Version 4.2 11.12.2021 - Finished(1:12 AM)
+>Am implementat algoritmul MinMax pentru joc.
+
+### Version 4.2.1 10.12.2021 - Resolved Bugs Problem (~1:07 PM)
+> Bug1: Algoritmul minmax nu returneaza doar o valoare, ci o tupla de 2 valori: cea mai buna coloana aleasa + scorul aferent operatiei facute.
+> Daca faceam doar column = minmax(...) imi dadea eroare. Astfel, trebuie facut conform urm. sintaxe: score, column = minmax(...)
+> Linia 118 din 4inaRow.py
+
+> Bug2: Eu in algoritm, in pasii de maximizare si minimizare initializez valoarea val cu + si - infinit(depinde de nivel).
+> Return-ul de la liniile 223 respectiv 236(din algoritmul minmax, functions.py) era indentat cu un tab mai in fata, astfel el se executa in instructiunea for.
+> Fiind clar din prima o valoare mai mica/mai mare se dadea return dupa prima iteratie, astfel se alege prima pozitie, ceea ce era gresit.
+> Ca sa rezolv acest lucru, am identat cu un tab in spate asa cum este acum, iar return-ul se efectueaza dupa instructiunea for.
+
+> Bug3: La minimizing level, am uitat sa schimb semnul din > in < si algoritmul mergea prost.
+
+>Am pregatit si un gif cum functioneaza acum AI cu algoritmul MinMax:
+![gif](https://media.giphy.com/media/YZEiu6ltYXFpic7tVx/giphy.gif)
 ## Version 4.1 10.12.2021 - Finished(9:31 PM)
 >Am implementat un sistem de scoring pentru alegerea AI-ului(orizontal, vertical si pe ambele diagonale: stg+drpt)
 

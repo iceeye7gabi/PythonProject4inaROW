@@ -114,8 +114,8 @@ if enemy == AI:
 
             #  Player2 - AI
             elif turn == AI:
-                #column = random.randint(0, COLUMN_COUNT - 1)
-                column = put_best_move_possible(board, AI_PIECE)
+                # column = random.randint(0, COLUMN_COUNT - 1)
+                output_score, column = minmax_algorithm(board, 3, True)
 
                 if is_valid_location(board, column):
                     my_row = get_empty_row(board, column)

@@ -121,53 +121,64 @@ def winning_conditions(board, piece):
                 return True
 
 
+# evaluate how many points each line gives
+def evaluate(line, piece):
+    enemy_piece = PLAYER1_PIECE
+    if piece == PLAYER1_PIECE:
+        enemy_piece = AI_PIECE
+
+    score = 0
+    if line.count(piece) == 4:
+        score += 50
+    elif line.count(piece) == 3 and line.count(EMPTY) == 1:
+        score += 5
+    elif line.count(piece) == 2 and line.count(EMPTY) == 2:
+        score += 2
+
+    if line.count(enemy_piece) == 3 and line.count(EMPTY) == 1:
+        score -= 4
+
+    return score
+
+
+# calculate the score depending on the situation
 def score_possible_position(board, piece):
     output_score = 0
+
     # Score Horizontal
     for iterator_row in range(ROW_COUNT):
         row_array = [int(i) for i in list(board[iterator_row, :])]
         for iterator_column in range(COLUMN_COUNT - 3):
-            window_horizontal = row_array[iterator_column:iterator_column + LENGTH_WINDOW]
+            line_horizontal = row_array[iterator_column:iterator_column + LENGTH_WINDOW]
 
-            if window_horizontal.count(piece) == 4:
-                output_score += 50
-            elif window_horizontal.count(piece) == 3 and window_horizontal.count(EMPTY) == 1:
-                output_score += 5
+            output_score += evaluate(line_horizontal, piece)
 
     # Score Vertical
     for iterator_column in range(COLUMN_COUNT):
         column_array = [int(i) for i in list(board[:, iterator_column])]
         for iterator_row in range(ROW_COUNT - 3):
-            window_vertical = column_array[iterator_row:iterator_row + LENGTH_WINDOW]
+            line_vertical = column_array[iterator_row:iterator_row + LENGTH_WINDOW]
 
-            if window_vertical.count(piece) == 4:
-                output_score += 50
-            elif window_vertical.count(piece) == 3 and window_vertical.count(EMPTY) == 1:
-                output_score += 5
+            output_score += evaluate(line_vertical, piece)
 
     # Score right diag
     for iterator_row in range(ROW_COUNT - 3):
         for iterator_column in range(COLUMN_COUNT - 3):
-            window_right_diag = [board[iterator_row + i][iterator_column + i] for i in range(LENGTH_WINDOW)]
+            line_right_diag = [board[iterator_row + i][iterator_column + i] for i in range(LENGTH_WINDOW)]
 
-            if window_right_diag.count(piece) == 4:
-                output_score += 50
-            elif window_right_diag.count(piece) == 3 and window_right_diag.count(EMPTY) == 1:
-                output_score += 5
+            output_score += evaluate(line_right_diag, piece)
 
     # Score left diag
     for iterator_row in range(ROW_COUNT - 3):
         for iterator_column in range(COLUMN_COUNT - 3):
-            window_left_diag = [board[iterator_row + 3 - i][iterator_column + i] for i in range(LENGTH_WINDOW)]
+            line_left_diag = [board[iterator_row + 3 - i][iterator_column + i] for i in range(LENGTH_WINDOW)]
 
-            if window_left_diag.count(piece) == 4:
-                output_score += 50
-            elif window_left_diag.count(piece) == 3 and window_left_diag.count(EMPTY) == 1:
-                output_score += 5
+            output_score += evaluate(line_left_diag, piece)
 
     return output_score
 
 
+# returns a list containing all valid locations
 def get_locations(board):
     valid_location_list = []
     for iterator_column in range(COLUMN_COUNT):
@@ -176,17 +187,50 @@ def get_locations(board):
     return valid_location_list
 
 
-def put_best_move_possible(board, piece):
-    best_score = 0
-    my_valid_location_list = get_locations(board)
-    best_column = random.choice(my_valid_location_list)
-    for iterator_column in my_valid_location_list:
-        aux_row = get_empty_row(board, iterator_column)
-        temp = board.copy()
-        put_piece(temp, aux_row, iterator_column, piece)
-        score = score_possible_position(temp, piece)
-        if score > best_score:
-            best_score = score
-            best_column = iterator_column
+# check if the game board is in a final state(someone won the game or no more available locations)
+def is_final_state(board):
+    return len(get_locations(board)) == 0 or winning_conditions(board, AI_PIECE) \
+           or winning_conditions(board, PLAYER1_PIECE)
 
-    return best_column
+
+# minmax algorithm
+def minmax_algorithm(board, depth, maximizing_player):
+    is_final = is_final_state(board)
+    locations = get_locations(board)
+    if depth == 0 or is_final:
+        if is_final:
+            if winning_conditions(board, PLAYER1_PIECE):
+                return -math.inf, None
+            elif winning_conditions(board, AI_PIECE):
+                return math.inf, None
+            else:  # No valid moves remaining
+                return 0, None
+        else:  # depth = 0
+            return score_possible_position(board, AI_PIECE), None
+    else:
+        if maximizing_player:
+            val = -math.inf
+            best_column = random.choice(locations)
+            for iterator_column in locations:
+                aux_board = board.copy()
+                my_row = get_empty_row(board, iterator_column)
+                put_piece(aux_board, my_row, iterator_column, AI_PIECE)
+                # new_generated_score = max(val, minmax_algorithm(aux_board, depth - 1, False))
+                new_generated_score = minmax_algorithm(aux_board, depth - 1, False)[0]
+                if new_generated_score > val:
+                    val = new_generated_score
+                    best_column = iterator_column
+            return val, best_column
+        else:  # Minimizing level
+            val = math.inf
+            best_column = random.choice(locations)
+            for iterator_column in locations:
+                aux_board = board.copy()
+                my_row = get_empty_row(board, iterator_column)
+                put_piece(aux_board, my_row, iterator_column, PLAYER1_PIECE)
+                # new_generated_score = min(val, minmax_algorithm(aux_board, depth - 1, True))
+                new_generated_score = minmax_algorithm(aux_board, depth - 1, True)[0]
+                if new_generated_score < val:
+                    val = new_generated_score
+                    best_column = iterator_column
+            return val, best_column
