@@ -1,6 +1,5 @@
 import random
 import numpy as np
-import pygame
 import math
 from init import COLUMN_COUNT, ROW_COUNT
 from variables import *
@@ -32,42 +31,6 @@ def get_empty_row(board, column):
 # print the board(we need to flip because of numpy)
 def print_board(board):
     print(np.flip(board, 0))
-
-
-# initializing the required variables for the screen
-SQUARESIZE = 100
-width = COLUMN_COUNT * SQUARESIZE
-height = (ROW_COUNT + 1) * SQUARESIZE
-size = (width, height)
-RADIUS = int(SQUARESIZE / 2 - 4)
-screen = pygame.display.set_mode(size)
-
-
-# draw the actual animated board
-def draw_board(board):
-    # for empty spaces
-    for iterator_column in range(COLUMN_COUNT):
-        for iterator_row in range(ROW_COUNT):
-            pygame.draw.rect(screen, COLORBLUE, (
-                iterator_column * SQUARESIZE, iterator_row * SQUARESIZE + SQUARESIZE, SQUARESIZE, SQUARESIZE))
-            pygame.draw.circle(screen, COLORBLACK, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
-                                                    int(iterator_row * SQUARESIZE + SQUARESIZE + SQUARESIZE / 2)),
-                               RADIUS)
-    # for pieces(player1 and player2)
-    for iterator_column in range(COLUMN_COUNT):
-        for iterator_row in range(ROW_COUNT):
-            if board[iterator_row][iterator_column] == PLAYER1_PIECE:
-                pygame.draw.circle(screen, COLORRED, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
-                                                      height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)), RADIUS)
-            elif board[iterator_row][iterator_column] == PLAYER2_PIECE:
-                pygame.draw.circle(screen, COLORYELLOW, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
-                                                         height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)),
-                                   RADIUS)
-            elif board[iterator_row][iterator_column] == AI_PIECE:
-                pygame.draw.circle(screen, COLORPINK, (int(iterator_column * SQUARESIZE + SQUARESIZE / 2),
-                                                       height - int(iterator_row * SQUARESIZE + SQUARESIZE / 2)),
-                                   RADIUS)
-    pygame.display.update()
 
 
 # check if a player won after every move
@@ -113,14 +76,14 @@ def evaluate(line, piece):
 
     score = 0
     if line.count(piece) == 4:
-        score += 50
+        score += POINT_BAR * 10
     elif line.count(piece) == 3 and line.count(EMPTY) == 1:
-        score += 5
+        score += POINT_BAR
     elif line.count(piece) == 2 and line.count(EMPTY) == 2:
-        score += 2
+        score += POINT_BAR//2
 
     if line.count(enemy_piece) == 3 and line.count(EMPTY) == 1:
-        score -= 4
+        score -= POINT_BAR
 
     return score
 
@@ -269,36 +232,3 @@ def minmax_algorithm_with_alpha_beta_pruning(board, depth, alpha, beta, maximizi
                 if beta <= alpha:
                     break
             return val, best_column
-
-
-# winning screen for AI
-def show_ai_win_screen():
-    font = pygame.font.SysFont("arial", int(height / 9))
-    pygame.time.wait(500)
-    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height))
-    label = font.render("AI WON!", True, COLORPINK)
-    screen.blit(label, (height / 4, 4 * width / 9))
-    pygame.display.update()
-    pygame.time.wait(3000)
-
-
-# winning screen for Player1
-def show_player1_win_screen():
-    font = pygame.font.SysFont("arial", int(height / 9))
-    pygame.time.wait(500)
-    pygame.draw.rect(screen, COLORRED, (0, 0, width, height))
-    label = font.render("PLAYER1 WON!", True, COLORPINK)
-    screen.blit(label, (height / 4, 4 * width / 9))
-    pygame.display.update()
-    pygame.time.wait(3000)
-
-
-# wining screen for Player2
-def show_player2_win_screen():
-    font = pygame.font.SysFont("arial", int(height / 9))
-    pygame.time.wait(500)
-    pygame.draw.rect(screen, COLORYELLOW, (0, 0, width, height))
-    label = font.render("PLAYER2 WON!", True, COLORPINK)
-    screen.blit(label, (height / 4, 4 * width / 9))
-    pygame.display.update()
-    pygame.time.wait(3000)

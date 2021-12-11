@@ -1,5 +1,12 @@
 # Versions
 
+## Version 6 11.12.2021 - Finished (4:57 PM)
+>Am refactorizat codul conform PEP Documentation.
+
+>Toate metodele care au legatura cu grafica jocului le-am pus in graphics.py, ca sa fie cat mai structurat proiectul.
+
+>O sa ma uit din nou pe cod cu o zi inainte de prezentare(pe 13 decembrie) in caz ca am omis ceva.
+
 ## Version 4.4 - 5 11.12.2021 - Finished(1:31 AM - 3:10 AM)
 >Am implementat algoritmul MinMax cu alpha beta prunning.
 

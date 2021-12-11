@@ -1,16 +1,16 @@
-import random
 import sys
 
 from functions import *
+
 from init import enemy, turn
+
+from graphics import *
 
 # initialize the board and start the game
 board = create_board()
 print(board)
 game_over = False
-
 pygame.init()
-font = pygame.font.SysFont("arial", int(height / 7))
 
 # case when the enemy is a regular player, ex: Player2
 if enemy == PLAYER2:
@@ -77,20 +77,7 @@ if enemy == PLAYER2:
 if enemy == AI:
 
     # choose AI level screen
-    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height))
-    pygame.draw.rect(screen, COLORRED, (0, 2 * width / 3, width, height / 3))
-    pygame.draw.rect(screen, COLORYELLOW, (0, width / 3, width, height / 3))
-    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height / 3))
-
-    label = font.render("EASY", True, COLORPINK)
-    screen.blit(label, (height / 3, width / 9))
-
-    label = font.render("MEDIUM", True, COLORPINK)
-    screen.blit(label, (height / 4, 4 * width / 9))
-
-    label = font.render("HARD", True, COLORPINK)
-    screen.blit(label, (height / 3, 7 * width / 9))
-
+    show_ai_levels_screen()
     pygame.display.update()
     chosen_difficulty = 0
     level_ai = -1
