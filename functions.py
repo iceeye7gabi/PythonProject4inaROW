@@ -1,26 +1,9 @@
 import random
-
 import numpy as np
 import pygame
 import math
 from init import COLUMN_COUNT, ROW_COUNT
-
-COLORBLUE = (0, 0, 255)
-COLORBLACK = (0, 0, 0)
-COLORRED = (255, 0, 0)
-COLORYELLOW = (255, 255, 0)
-COLORPINK = (255, 192, 203)
-
-PLAYER1 = 1
-PLAYER2 = 2
-AI = 3
-
-PLAYER1_PIECE = 1
-PLAYER2_PIECE = 2
-AI_PIECE = 3
-
-LENGTH_WINDOW = 4
-EMPTY = 0
+from variables import *
 
 
 # initialize the matrix for the game
@@ -87,6 +70,7 @@ def draw_board(board):
     pygame.display.update()
 
 
+# check if a player won after every move
 def winning_conditions(board, piece):
     # check horizontally
     for iterator_column in range(COLUMN_COUNT - 3):
@@ -234,3 +218,87 @@ def minmax_algorithm(board, depth, maximizing_player):
                     val = new_generated_score
                     best_column = iterator_column
             return val, best_column
+
+
+# minmax algorithm with alpha_beta pruning
+def minmax_algorithm_with_alpha_beta_pruning(board, depth, alpha, beta, maximizing_player):
+    is_final = is_final_state(board)
+    locations = get_locations(board)
+    if depth == 0 or is_final:
+        if is_final:
+            if winning_conditions(board, PLAYER1_PIECE):
+                return -math.inf, None
+            elif winning_conditions(board, AI_PIECE):
+                return math.inf, None
+            else:  # No valid moves remaining
+                return 0, None
+        else:  # depth = 0
+            return score_possible_position(board, AI_PIECE), None
+    else:
+        if maximizing_player:
+            val = -math.inf
+            best_column = random.choice(locations)
+            for iterator_column in locations:
+                aux_board = board.copy()
+                my_row = get_empty_row(board, iterator_column)
+                put_piece(aux_board, my_row, iterator_column, AI_PIECE)
+                # new_generated_score = max(val, minmax_algorithm(aux_board, depth - 1, False))
+                new_generated_score = \
+                    minmax_algorithm_with_alpha_beta_pruning(aux_board, depth - 1, alpha, beta, False)[0]
+                if new_generated_score > val:
+                    val = new_generated_score
+                    best_column = iterator_column
+                alpha = max(alpha, val)
+                if alpha >= beta:
+                    break
+            return val, best_column
+        else:  # Minimizing level
+            val = math.inf
+            best_column = random.choice(locations)
+            for iterator_column in locations:
+                aux_board = board.copy()
+                my_row = get_empty_row(board, iterator_column)
+                put_piece(aux_board, my_row, iterator_column, PLAYER1_PIECE)
+                # new_generated_score = min(val, minmax_algorithm(aux_board, depth - 1, True))
+                new_generated_score = minmax_algorithm_with_alpha_beta_pruning(aux_board, depth - 1, alpha, beta, True)[
+                    0]
+                if new_generated_score < val:
+                    val = new_generated_score
+                    best_column = iterator_column
+                beta = min(beta, val)
+                if beta <= alpha:
+                    break
+            return val, best_column
+
+
+# winning screen for AI
+def show_ai_win_screen():
+    font = pygame.font.SysFont("arial", int(height / 9))
+    pygame.time.wait(500)
+    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height))
+    label = font.render("AI WON!", True, COLORPINK)
+    screen.blit(label, (height / 4, 4 * width / 9))
+    pygame.display.update()
+    pygame.time.wait(3000)
+
+
+# winning screen for Player1
+def show_player1_win_screen():
+    font = pygame.font.SysFont("arial", int(height / 9))
+    pygame.time.wait(500)
+    pygame.draw.rect(screen, COLORRED, (0, 0, width, height))
+    label = font.render("PLAYER1 WON!", True, COLORPINK)
+    screen.blit(label, (height / 4, 4 * width / 9))
+    pygame.display.update()
+    pygame.time.wait(3000)
+
+
+# wining screen for Player2
+def show_player2_win_screen():
+    font = pygame.font.SysFont("arial", int(height / 9))
+    pygame.time.wait(500)
+    pygame.draw.rect(screen, COLORYELLOW, (0, 0, width, height))
+    label = font.render("PLAYER2 WON!", True, COLORPINK)
+    screen.blit(label, (height / 4, 4 * width / 9))
+    pygame.display.update()
+    pygame.time.wait(3000)

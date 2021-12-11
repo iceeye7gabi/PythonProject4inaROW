@@ -10,6 +10,7 @@ print(board)
 game_over = False
 
 pygame.init()
+font = pygame.font.SysFont("arial", int(height / 7))
 
 # case when the enemy is a regular player, ex: Player2
 if enemy == PLAYER2:
@@ -45,9 +46,10 @@ if enemy == PLAYER2:
                         my_row = get_empty_row(board, column)
                         put_piece(board, my_row, column, PLAYER1_PIECE)
 
-                        if winning_conditions(board, 1):
+                        if winning_conditions(board, PLAYER1):
                             print("Player1 won the game.")
                             game_over = True
+                            show_player1_win_screen()
                             break
                         print_board(board)
                         draw_board(board)
@@ -62,9 +64,10 @@ if enemy == PLAYER2:
                         my_row = get_empty_row(board, column)
                         put_piece(board, my_row, column, PLAYER2_PIECE)
 
-                        if winning_conditions(board, 2):
+                        if winning_conditions(board, PLAYER2):
                             print("Player2 won the game.")
                             game_over = True
+                            show_player2_win_screen()
                             break
                     print_board(board)
                     draw_board(board)
@@ -72,6 +75,41 @@ if enemy == PLAYER2:
 
 # case when the enemy is a AI
 if enemy == AI:
+
+    # choose AI level screen
+    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height))
+    pygame.draw.rect(screen, COLORRED, (0, 2 * width / 3, width, height / 3))
+    pygame.draw.rect(screen, COLORYELLOW, (0, width / 3, width, height / 3))
+    pygame.draw.rect(screen, COLORWHITE, (0, 0, width, height / 3))
+
+    label = font.render("EASY", True, COLORPINK)
+    screen.blit(label, (height / 3, width / 9))
+
+    label = font.render("MEDIUM", True, COLORPINK)
+    screen.blit(label, (height / 4, 4 * width / 9))
+
+    label = font.render("HARD", True, COLORPINK)
+    screen.blit(label, (height / 3, 7 * width / 9))
+
+    pygame.display.update()
+    chosen_difficulty = 0
+    level_ai = -1
+    while not chosen_difficulty:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            # player has to click in order to choose AI level
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                point = event.pos[1]
+                if point < height / 3:
+                    level_ai = 0
+                if height / 3 < point < 2 * height / 3:
+                    level_ai = 1
+                if 2 * height / 3 < point < height:
+                    level_ai = 2
+                chosen_difficulty = 1
 
     # drawing the board
     draw_board(board)
@@ -104,26 +142,37 @@ if enemy == AI:
                         my_row = get_empty_row(board, column)
                         put_piece(board, my_row, column, PLAYER1_PIECE)
 
-                        if winning_conditions(board, 1):
+                        if winning_conditions(board, PLAYER1):
                             print("Player1 won the game.")
                             game_over = True
+                            show_player1_win_screen()
                             break
                         print_board(board)
                         draw_board(board)
                         turn = AI
 
             #  Player2 - AI
-            elif turn == AI:
-                # column = random.randint(0, COLUMN_COUNT - 1)
-                output_score, column = minmax_algorithm(board, 3, True)
+            elif turn == AI and not game_over:
+                # Easy AI - Random Choice
+                if level_ai == 0:
+                    column = random.randint(0, COLUMN_COUNT - 1)
+                # Medium AI - MinMax with depth = 3
+                elif level_ai == 1:
+                    output_score, column = minmax_algorithm(board, 3, True)
+                # Hard AI - MinMax with alpha_beta pruning with depth = 5
+                elif level_ai == 2:
+                    output_score, column = minmax_algorithm_with_alpha_beta_pruning(board, 5, -math.inf, math.inf, True)
+                else:
+                    column = random.randint(0, COLUMN_COUNT - 1)
 
                 if is_valid_location(board, column):
                     my_row = get_empty_row(board, column)
                     put_piece(board, my_row, column, AI_PIECE)
 
-                    if winning_conditions(board, 3):
+                    if winning_conditions(board, AI):
                         print("AI won the game.")
                         game_over = True
+                        show_ai_win_screen()
                         break
                 print_board(board)
                 draw_board(board)

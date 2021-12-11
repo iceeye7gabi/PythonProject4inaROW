@@ -1,8 +1,5 @@
 import sys
-
-PLAYER1 = 1
-PLAYER2 = 2
-AI = 3
+from variables import PLAYER1, PLAYER2, AI
 
 # verify the correctness of the input given from keyboard
 if len(sys.argv) < 4:

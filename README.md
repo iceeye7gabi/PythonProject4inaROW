@@ -1,5 +1,16 @@
 # Versions
 
+## Version 4.4 - 5 11.12.2021 - Finished(1:31 AM - 3:10 AM)
+>Am implementat algoritmul MinMax cu alpha beta prunning.
+
+>O consecinta ar fi ca daca rulez acum algoritmul cu depth-ul egal cu o valoare mai mare(de exemplu 5), AI-ul face alegerile mult mai rapid datorita retazarii arborelui in timpul algoritmului.
+
+>Am refactorizat codul conform PEP Documentation.
+
+>Am adaugat parte grafica pentru alegerea tipului de AI.(nivel easy - random AI, nivel medium - minmax cu depth = 3 si nivel hard - minmax cu alpha_beta prunning cu depth = 5).
+
+>Am pregatit si un gif cum functioneaza acum AI cu algoritmul MinMax:
+![gif](https://media.giphy.com/media/OGkCRiWB4BvHwzIBEL/giphy.gif)
 ## Version 4.2 11.12.2021 - Finished(1:12 AM)
 >Am implementat algoritmul MinMax pentru joc.
 
