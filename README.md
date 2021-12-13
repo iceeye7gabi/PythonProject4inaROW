@@ -1,5 +1,12 @@
 # Versions
 
+## Version 7 14.12.2021 - Finished (1:56 AM) - FINAL VERSION
+>Am refactorizat din nou codul conform PEP Documentation.
+
+>Am schimbat comentariile simple in unele de tipul string doc.
+
+>Am adaugat o limitare la input: Numarul de linii si coloane intre 6 si 10.
+
 ## Version 6 11.12.2021 - Finished (4:57 PM)
 >Am refactorizat codul conform PEP Documentation.
 

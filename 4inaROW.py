@@ -6,26 +6,36 @@ from init import enemy, turn
 
 from graphics import *
 
-# initialize the board and start the game
+"""
+initialize the board and start the game
+"""
 board = create_board()
 print(board)
 game_over = False
 pygame.init()
 
-# case when the enemy is a regular player, ex: Player2
+"""
+case when the enemy is a regular player, ex: Player2
+"""
 if enemy == PLAYER2:
 
-    # drawing the board
+    """
+    drawing the board
+    """
     draw_board(board)
     pygame.display.update()
 
     while not game_over:
         for event in pygame.event.get():
-            # handle the event when you close the game through the exit button
+            """
+            handle the event when you close the game through the exit button
+            """
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            # handle the event when the player can see his turn above the board
+            """
+            handle the event when the player can see his turn above the board
+            """
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
                 pos_x = event.pos[0]
@@ -35,9 +45,11 @@ if enemy == PLAYER2:
                     pygame.draw.circle(screen, COLORYELLOW, (pos_x, int(SQUARESIZE / 2)), RADIUS)
             pygame.display.update()
 
-            # handle the clicking event
+            """
+            handle the clicking event
+            """
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #  Player1 - regular player
+                # Player1 - regular player
                 if turn == PLAYER1:
                     pos_x = event.pos[0]
                     column = int(math.floor(pos_x / SQUARESIZE))
@@ -50,6 +62,7 @@ if enemy == PLAYER2:
                             print("Player1 won the game.")
                             game_over = True
                             show_player1_win_screen()
+                            print_board(board)
                             break
                         print_board(board)
                         draw_board(board)
@@ -68,15 +81,18 @@ if enemy == PLAYER2:
                             print("Player2 won the game.")
                             game_over = True
                             show_player2_win_screen()
+                            print_board(board)
                             break
                     print_board(board)
                     draw_board(board)
                     turn = PLAYER1
 
-# case when the enemy is a AI
+"""
+case when the enemy is a AI
+"""
 if enemy == AI:
 
-    # choose AI level screen
+    """choose AI level screen"""
     show_ai_levels_screen()
     pygame.display.update()
     chosen_difficulty = 0
@@ -87,7 +103,7 @@ if enemy == AI:
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            # player has to click in order to choose AI level
+            """player has to click in order to choose AI level"""
             if event.type == pygame.MOUSEBUTTONDOWN:
                 point = event.pos[1]
                 if point < height / 3:
@@ -98,17 +114,23 @@ if enemy == AI:
                     level_ai = 2
                 chosen_difficulty = 1
 
-    # drawing the board
+    """
+    drawing the board
+    """
     draw_board(board)
     pygame.display.update()
 
     while not game_over:
         for event in pygame.event.get():
-            # handle the event when you close the game through the exit button
+            """
+            handle the event when you close the game through the exit button
+            """
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            # handle the event when the player can see his turn above the board
+            """
+            handle the event when the player can see his turn above the board
+            """
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
                 pos_x = event.pos[0]
@@ -120,7 +142,6 @@ if enemy == AI:
 
             #  Player1/2 - regular player
             if turn == PLAYER1 or turn == PLAYER2:
-                #  Player1/2 - regular player
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos_x = event.pos[0]
                     column = int(math.floor(pos_x / SQUARESIZE))
@@ -133,6 +154,7 @@ if enemy == AI:
                             print("Player1 won the game.")
                             game_over = True
                             show_player1_win_screen()
+                            print_board(board)
                             break
                         print_board(board)
                         draw_board(board)
@@ -160,6 +182,7 @@ if enemy == AI:
                         print("AI won the game.")
                         game_over = True
                         show_ai_win_screen()
+                        print_board(board)
                         break
                 print_board(board)
                 draw_board(board)

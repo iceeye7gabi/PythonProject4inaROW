@@ -13,8 +13,16 @@ RADIUS = int(SQUARESIZE / 2 - 4)
 screen = pygame.display.set_mode(size)
 
 
-# draw the actual animated board
 def draw_board(board):
+    """
+    draw the actual animated board
+    here we generate in the first phase all the empty spaces(the board without any pieces in it)
+    then we generate the pieces for every player, which will be over the black circles from above.
+    this will be called everytime a new move is mode, so the board is refreshed everytime
+
+    :param board:  the matrix of the game
+    :return: void
+    """
     # for empty spaces
     for iterator_column in range(COLUMN_COUNT):
         for iterator_row in range(ROW_COUNT):
@@ -44,8 +52,13 @@ def draw_board(board):
     pygame.display.update()
 
 
-# winning screen for AI
 def show_ai_win_screen():
+    """
+    winning screen for AI
+    a new graphic window where a message appears: AI WON!
+
+    :return:void
+    """
     font = pygame.font.SysFont("arial", int(height / 9))
     pygame.time.wait(500)
     pygame.draw.rect(screen, variables.COLORWHITE, (0, 0, width, height))
@@ -55,8 +68,13 @@ def show_ai_win_screen():
     pygame.time.wait(3000)
 
 
-# winning screen for Player1
 def show_player1_win_screen():
+    """
+       winning screen for Player1
+       a new graphic window where a message appears: Player1 WON!
+
+       :return:void
+       """
     font = pygame.font.SysFont("arial", int(height / 9))
     pygame.time.wait(500)
     pygame.draw.rect(screen, variables.COLORRED, (0, 0, width, height))
@@ -66,8 +84,13 @@ def show_player1_win_screen():
     pygame.time.wait(3000)
 
 
-# wining screen for Player2
 def show_player2_win_screen():
+    """
+       winning screen for Player2
+       a new graphic window where a message appears: Player2 WON!
+
+       :return:void
+       """
     font = pygame.font.SysFont("arial", int(height / 9))
     pygame.time.wait(500)
     pygame.draw.rect(screen, variables.COLORYELLOW, (0, 0, width, height))
@@ -78,6 +101,12 @@ def show_player2_win_screen():
 
 
 def show_ai_levels_screen():
+    """
+    choose AI difficulty screen
+    we divide a window in 3 parts: easy medium and hard depending on the difficulty of the AI
+
+    :return:void
+    """
     font = pygame.font.SysFont("arial", int(height / 7))
 
     # choose AI level screen
