@@ -24,7 +24,6 @@ if enemy == PLAYER2:
     """
     draw_board(board)
     pygame.display.update()
-
     while not game_over:
         for event in pygame.event.get():
             """
@@ -36,13 +35,70 @@ if enemy == PLAYER2:
             """
             handle the event when the player can see his turn above the board
             """
+            pygame.display.update()
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
                 pos_x = event.pos[0]
                 if turn == PLAYER1:
+                    show_player_turn(turn)
                     pygame.draw.circle(screen, COLORRED, (pos_x, int(SQUARESIZE / 2)), RADIUS)
+                    if 0 < pos_x < 100:
+                        pygame.draw.line(screen, COLORPINK, (50, 80), (50, 500), width = 3)
+                        pygame.display.update()
+                    else:
+                        draw_board(board)
+                    if 101 < pos_x < 200:
+                        pygame.draw.line(screen, COLORPINK, (150, 80), (150, 500), width = 3)
+                        pygame.display.update()
+                    elif 201 < pos_x < 300:
+                        pygame.draw.line(screen, COLORPINK, (250, 80), (250, 500), width = 3)
+                        pygame.display.update()
+                    elif 301 < pos_x < 400:
+                        pygame.draw.line(screen, COLORPINK, (350, 80), (350, 500), width = 3)
+                        pygame.display.update()
+                    elif 401 < pos_x < 500:
+                        pygame.draw.line(screen, COLORPINK, (450, 80), (450, 500), width = 3)
+                        pygame.display.update()
+                    elif 501 < pos_x < 600:
+                        pygame.draw.line(screen, COLORPINK, (550, 80), (550, 500), width = 3)
+                        pygame.display.update()
+                    elif 601 < pos_x < 700:
+                        pygame.draw.line(screen, COLORPINK, (650, 80), (650, 500), width = 3)
+                        pygame.display.update()
+                    elif 701 < pos_x < 800:
+                        pygame.draw.line(screen, COLORPINK, (750, 80), (750, 500), width = 3)
+                        pygame.display.update()
+
+                    pygame.display.update()
                 elif turn == PLAYER2:
+                    show_player_turn(turn)
                     pygame.draw.circle(screen, COLORYELLOW, (pos_x, int(SQUARESIZE / 2)), RADIUS)
+                    if 0 < pos_x < 100:
+                        pygame.draw.line(screen, COLORPINK, (50, 80), (50, 500), width = 3)
+                        pygame.display.update()
+                    else:
+                        draw_board(board)
+                    if 101 < pos_x < 200:
+                        pygame.draw.line(screen, COLORPINK, (150, 80), (150, 500), width = 3)
+                        pygame.display.update()
+                    elif 201 < pos_x < 300:
+                        pygame.draw.line(screen, COLORPINK, (250, 80), (250, 500), width = 3)
+                        pygame.display.update()
+                    elif 301 < pos_x < 400:
+                        pygame.draw.line(screen, COLORPINK, (350, 80), (350, 500), width = 3)
+                        pygame.display.update()
+                    elif 401 < pos_x < 500:
+                        pygame.draw.line(screen, COLORPINK, (450, 80), (450, 500), width = 3)
+                        pygame.display.update()
+                    elif 501 < pos_x < 600:
+                        pygame.draw.line(screen, COLORPINK, (550, 80), (550, 500), width = 3)
+                        pygame.display.update()
+                    elif 601 < pos_x < 700:
+                        pygame.draw.line(screen, COLORPINK, (650, 80), (650, 500), width = 3)
+                        pygame.display.update()
+                    elif 701 < pos_x < 800:
+                        pygame.draw.line(screen, COLORPINK, (750, 80), (750, 500), width = 3)
+                        pygame.display.update()
             pygame.display.update()
 
             """
@@ -53,6 +109,10 @@ if enemy == PLAYER2:
                 if turn == PLAYER1:
                     pos_x = event.pos[0]
                     column = int(math.floor(pos_x / SQUARESIZE))
+                    pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
+                    pygame.draw.circle(screen, COLORYELLOW, (pos_x, int(SQUARESIZE / 2)), RADIUS)
+                    show_player_turn(PLAYER2)
+                    pygame.display.update()
 
                     if is_valid_location(board, column):
                         my_row = get_empty_row(board, column)
@@ -72,6 +132,10 @@ if enemy == PLAYER2:
                 elif turn == PLAYER2:
                     pos_x = event.pos[0]
                     column = int(math.floor(pos_x / SQUARESIZE))
+                    pygame.draw.rect(screen, COLORBLACK, (0, 0, width, SQUARESIZE))
+                    pygame.draw.circle(screen, COLORRED, (pos_x, int(SQUARESIZE / 2)), RADIUS)
+                    show_player_turn(PLAYER1)
+                    pygame.display.update()
 
                     if is_valid_location(board, column):
                         my_row = get_empty_row(board, column)
@@ -86,7 +150,6 @@ if enemy == PLAYER2:
                     print_board(board)
                     draw_board(board)
                     turn = PLAYER1
-
 """
 case when the enemy is a AI
 """

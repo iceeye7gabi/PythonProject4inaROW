@@ -123,3 +123,13 @@ def show_ai_levels_screen():
 
     label = font.render("HARD", True, COLORPINK)
     screen.blit(label, (height / 3, 7 * width / 9))
+
+
+def show_player_turn(player):
+    font = pygame.font.SysFont("arial", int(height / 9))
+    if player == PLAYER1:
+        label = font.render("Player1 turn", True, COLORPINK)
+        screen.blit(label, (height / 3 + 130, width / 9 - 100))
+    if player == PLAYER2:
+        label = font.render("Player2 turn", True, COLORPINK)
+        screen.blit(label, (height / 3 + 130, width / 9 - 100))

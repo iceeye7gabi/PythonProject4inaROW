@@ -1,5 +1,16 @@
 # Versions
 
+## Version 8 14.12.2021 - Finished (11:44 AM) - AFTER TEACHER SUGGESTIONS
+>Am facut modificarile pe care le-am discutat la ora: imediat dupa ce un jucator pune
+pe tabla de joc piesa aceasta se modifica instant in a2a piesa a celuilalt jucator. 
+
+>Acum se va afisa ce player trebuie sa mute piesa.
+ 
+>Acum am adaugat un hover peste piesa cand i se face hover: astfel jucatorul poate vedea in ce coloana poate sa puna piesa.
+ 
+>Am pregatit si un gif:
+
+![gif](https://media.giphy.com/media/PJcsyFyCfXQ6ozJAvk/giphy.gif)
 ## Version 7 14.12.2021 - Finished (1:56 AM) - FINAL VERSION
 >Am refactorizat din nou codul conform PEP Documentation.
 
